@@ -1,4 +1,4 @@
-/*
+
 var http = require('http');
 var fs = require('fs');
 
@@ -55,7 +55,7 @@ var server = http.createServer(function (request, response) {
 );
 
 server.listen(PORT)
-*/
+
 /*
 const express = require('express');
 const request = require('request');
@@ -82,12 +82,12 @@ app.get('/', (req, res) => {
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => console.log(`listening on ${PORT}`));
-*/
 
+/*
 var request = require('request');
 request('http://localhost:3000', function (error, response, body) {
   if (!error && response.statusCode == 200) {
     console.log(body) // Print the google web page.
   }
 })
-
+*/

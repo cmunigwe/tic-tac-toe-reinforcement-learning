@@ -1,63 +1,36 @@
-  //import Game from './Game';
-
-/*
-fetch("http://localhost:3000")
-  .then(function (response) {
-    const jsondata = await response.json();
-    return response.json();
-  })
-  .then(function (myJson) {
-    console.log(myJson)
-  })
-  .catch(function (error) {
-    console.log("Error: " + error);
-  });
-
-  console.log(jsondata)
-  */
-/*
-let jsondata;    
-fetch("http://localhost:3000",  {
-  method: 'POST', // *GET, POST, PUT, DELETE, etc.
-  mode: 'no-cors'}).then(
-        function(u){ return u.json();}
-      ).then(
-        function(json){
-          jsondata = json;
-        }
-      )
-console.log("JSON")
-console.log(jsondata)
-*/
-
-async function fetchMoviesJSON() {
-
-  const response = await fetch('http://localhost:3000');
-  const movies = await response.json();
-  return movies;
-}
-let result 
-fetchMoviesJSON().then(movies => {
-  movies // fetched movies
-
- 
-  
-
-  class Player {
+class Player{
     constructor(){
-      this.init()
+      
+      async function fetchPolicyJSON() {
+        const response = await fetch('http://localhost:3000');
+        const policy = await response.json();
+        return policy;
+      }
+      fetchPolicyJSON().then(policy => {
+        this.state = {
+            name: "AI player",
+            states: [],
+            lr : 0.2,
+            exp_rate : 0.3,
+            decay_gamma : 0.9,
+            states_value : policy
+          }
+        //{this.setState({states_value : policy})}
+      });
     }
 
-    init = (name, exp_rate = 0.3) =>{
-      this.state = {
-        name: "AI player",
-        states: [],
-        lr : 0.2,
-        exp_rate : 0.3,
-        decay_gamma : 0.9,
-        states_value : movies
-      }
+    componentDidMount(){
+        async function fetchPolicyJSON() {
+            const response = await fetch('http://localhost:3000');
+            const policy = await response.json();
+            return policy;
+          }
+          fetchPolicyJSON().then(policy => {
+            {this.setState({states_value : policy})}
+          });  
     }
+
+
 
     getHash = (board) => {
       let boardHash = ""
@@ -77,30 +50,36 @@ fetchMoviesJSON().then(movies => {
  
 
     chooseAction = (positions, current_board, symbol) =>{
+        
       let action
-      if (Math.random() <= self.exp_rate){
+      
+
+      if (Math.random() <= this.exp_rate){
         //take random action
         let idx = Math.floor(Math.random() * Math.floor(positions.length))
         action = positions[idx]
       }
-      
       else{
+        console.log("DH*UHIOHN")
+        console.log(positions)
         let value_max = -999
         let value
         for (let p in positions){
+            console.log("PSSSS")
+            console.log(positions[p])
           let next_board = [...current_board]
-          next_board[p] = symbol
+          next_board[positions[p]] = symbol
           let next_boardHash = this.getHash(next_board)
           if (this.state.states_value[next_board] === null){
             value = 0
           }
           else{
-            this.state.states_value[next_boardHash]
+            value = this.state.states_value[next_boardHash]
           }
           console.log("value " + String(value))
           if (value >= value_max){
             value_max = value
-            action = p
+            action = positions[p]
           }
                     
         }
@@ -121,7 +100,7 @@ fetchMoviesJSON().then(movies => {
 
     //at the end of game, backpropagate and update states value
     feedReward = (reward) =>{  
-      for (st in this.state.states.reverse()){
+      for (let st in this.state.states.reverse()){
         if (this.state.states_value[st] === null){
           this.state.states_value[st] = 0
         }
@@ -134,17 +113,7 @@ fetchMoviesJSON().then(movies => {
     reset = () =>{
       this.state.states = []
     }
+    
   }
-  
-  var newGame = require("./Game");
 
-  /*
-  var startGame =  new ss.A("2")
-  p1 = new Player("computer", exp_rate = 0.3)
-  p2 = new Player("human")
-  new newGame.Game()
-  */
-
-  new Game()
-  
-});
+  export default Player

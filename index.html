@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width">
     <title>TicTacToe</title>
     <link href="style.css" rel="stylesheet" type="text/css" />
+    <!-- data-main attribute tells require.js to load scripts/main.js after require.js loads. -->
+    <script data-main="script" src="require.js"></script>
   </head>
   <body>
     <div class = "container_row">
@@ -34,6 +36,6 @@
     <button id = "reset_button">Reset</button>
     </div>
     <script src="https://cdn.jsdelivr.net/gh/mathusummut/confetti.js/confetti.min.js"></script>
-    <script src="script.js"></script>
+    <script type = "module" src="script.js"></script>
   </body>
 </html>
